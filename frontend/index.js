@@ -74,8 +74,3 @@ app.listen(3000, () => {
 
   console.log('Front-end is listenting on port 3000');
 });
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login');
-}
