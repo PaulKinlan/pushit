@@ -1,7 +1,7 @@
 {
-  "name": "toplink-subscribe-service",
+  "name": "web-push-rocks-subscribe-service",
   "version": "1.0.0",
-  "description": "Toplinks Subscribe Service",
+  "description": "Web Push Rocks Subscribe Service",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "google-cloud": "^0.43.0"
+    "google-cloud": "latest"
   }
 }

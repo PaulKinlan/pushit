@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "google-cloud": "^0.43.0",
-    "web-push": "^3.1.0"
+    "google-cloud": "latest",
+    "web-push": "latest"
   }
 }

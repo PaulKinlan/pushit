@@ -1,7 +1,7 @@
 {
-  "name": "toplink-model",
+  "name": "web-push-rocks-model",
   "version": "1.0.0",
-  "description": "Toplinks model",
+  "description": "Web Push Rocks model",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "google-cloud": "^0.43.0",
-    "googleapis": "^14.1.0"
+    "google-cloud": "latest",
+    "googleapis": "latest"
   }
 }

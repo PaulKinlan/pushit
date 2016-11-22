@@ -1,7 +1,7 @@
 const gcloud = require('google-cloud');
 const webpush = require('web-push');
 const model = require('../model');
-const project_id = 'toplink-today';
+const project_id = 'web-push-rocks';
 const pubsub = gcloud.pubsub({
   projectId: project_id
 });
@@ -11,10 +11,10 @@ const pubsub = gcloud.pubsub({
   This service will get notified when we need to send a notification
 */
 
-const newsTopic = `projects/${project_id}/topics/technology`;
+const sendTopic = `projects/${project_id}/topics/send`;
 
 // Create the topic
-pubsub.createTopic(newsTopic)
+pubsub.createTopic(sendTopic)
       .then(data => topic = data[0])
       .catch(data => topic = pubsub.topic(newsTopic))
       .then(topic => topic.subscribe('subscription-send-service', {reuseExisting:true}))
@@ -23,41 +23,22 @@ pubsub.createTopic(newsTopic)
         subscription.on('message', message => {
           // We only expect one message a day so this for now will be super super lightweight
           const payload = message.data.message;
-          const msgObj = new Message(payload.title, payload.description, payload.url);
-          // Save the message object
-          msgObj.put();
 
-          model.Subscription.getAllByTopic(`projects/${project_id}/topics/technology`, topic => {
-            const applicationServerKey = topic.applicationServerKey;
-            const endpoint = topic.endpoint;
-            const p256dh = topic.p256dh;
-            const auth = topic.authKey;
-            const privateKey = topic.privateKey;
-            const stringPayload = JSON.stringify(payload);
-            const pushSubscription = {
-              endpoint: endpoint,
-              keys: {
-                p256dh: p256dh,
-                auth: auth
-              }
-            };
+          webpush.setVapidDetails('https://webpush.rocks',applicationServerKey, privateKey);
 
-            webpush.setVapidDetails('https://toplink.today',applicationServerKey, privateKey);
-
-            webpush.sendNotification(
-              pushSubscription,
-              JSON.stringify(payload)
-            )
-            .catch(err => {
-              if(err.statusCode && err.statusCode == 410) {
-                console.log('Subscription not registered');
-                // Delete the subscription and ack
-                return topic.delete();
-              }
-            })
-            .then(res => {
-              message.ack();
-            });
+          webpush.sendNotification(
+            pushSubscription,
+            JSON.stringify(payload)
+          )
+          .catch(err => {
+            if(err.statusCode && err.statusCode == 410) {
+              console.log('Subscription not registered');
+              // Delete the subscription and ack
+              return topic.delete();
+            }
+          })
+          .then(res => {
+            message.ack();
           });
         });
       });

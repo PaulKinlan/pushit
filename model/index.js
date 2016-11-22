@@ -1,7 +1,7 @@
 const google = require('googleapis');
 const gcloud = require('google-cloud');
 const datastore = gcloud.datastore({
-  projectId: 'toplink-today'
+  projectId: 'web-push-rocks'
 });
 
 class Model {
@@ -113,64 +113,6 @@ class ApplicationKey extends Model {
 }
 
 /*
-  Record all the messages that have been sent.
-   -
-*/
-class Message extends Model {
-
-  constructor(title, description, url) {
-    super('Message');
-
-    this._title = title;
-    this._description = description;
-    this._url = url;
-  }
-
-  get title() {
-    return this._title;
-  }
-
-  get description() {
-    return this._title;
-  }
-
-  get url() {
-    return this._title;
-  }
-
-  put() {
-    // Need to think of a key...
-    return super.put([this.url], {
-      title: this.title,
-      description: this.description,
-      url: this.url
-    });
-  }
-
-  static getAllByDate(messageCallback) {
-    return this.query('Message')
-            .then(stream => {
-                  stream.on('error', function() {
-                  })
-                  .on('data', function (entity) {
-
-                    const title = entity.title;
-                    const description = entity.description;
-                    const url = entity.url;
-
-                    const message = new Message(title, description, url);
-
-                    messageCallback(message);
-                  })
-                  .on('info', function(info) {})
-                  .on('end', function() {
-                    // All entities retrieved.
-                  });
-        });
-  }
-}
-
-/*
   A user has one subscription for each topic, the subscription contains
   the auth key.  NOTE: This doesn't handle actual topics right now
    - endpoint (who we are sending it to)
@@ -179,9 +121,8 @@ class Message extends Model {
    - auth secret
 */
 class Subscription extends Model {
-  constructor(topic, endpoint, applicationServerKey, p256dh, authKey, privateKey) {
+  constructor(endpoint, applicationServerKey, p256dh, authKey, privateKey) {
     super('Subscription');
-    this._topic = topic;
     this._endpoint = endpoint;
     this._applicationServerKey = applicationServerKey;
     this._p256dh = p256dh;
@@ -215,7 +156,6 @@ class Subscription extends Model {
 
   put() {
     return super.put([this.endpoint], {
-      topic: this.topic,
       endpoint: this.endpoint,
       applicationServerKey: this.applicationServerKey,
       p256dh: this.p256dh,
@@ -226,30 +166,6 @@ class Subscription extends Model {
 
   delete() {
     return super.delete([this.endpoint]);
-  }
-
-  static getAllByTopic(topic, topicCallback) {
-      super.query('Subscription', ["topic", topic])
-        .then(stream => {
-                  stream.on('error', function() {
-                  })
-                  .on('data', function (entity) {
-
-                    const topic = entity.topic;
-                    const endpoint = entity.endpoint;
-                    const aps = entity.applicationServerKey;
-                    const p256dh = entity.p256dh;
-                    const authKey = entity.authKey;
-                    const privateKey = entity.privateKey;
-                    const subscription = new Subscription(topic, endpoint, aps, p256dh, authKey, privateKey);
-
-                    topicCallback(subscription);
-                  })
-                  .on('info', function(info) {})
-                  .on('end', function() {
-                    // All entities retrieved.
-                  });
-        });
   }
 
   static getByEndpoint(endpoint) {

@@ -1,7 +1,7 @@
 // This is not a real 'test harness' it's more of an end to end thing
 
 const model = require('./index.js');
-const project_id = 'toplink-today';
+const project_id = 'web-push-rocks';
 
 // Integration test that will dump stuff in the database.
 
@@ -22,7 +22,6 @@ getApplicationKey = () => {
 
 saveSubscription = () => {
     sub = new model.Subscription(
-            `projects/${project_id}/topics/technology`,
             '1',
             '2',
             '3',
@@ -30,14 +29,6 @@ saveSubscription = () => {
           );
     return sub.put(`projects/${project_id}/topics/technology`).then(d => console.log(`success`))
 }
-
-getSubscriptionsByTopic = () => {
-  model.Subscription.getAllByTopic(`projects/${project_id}/topics/technology`, (topic) => {
-       console.log(topic);
-  });
-    
-}
-
 
 initApplicationKey();
 saveApplicationKey();

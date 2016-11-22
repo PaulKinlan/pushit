@@ -1,6 +1,6 @@
 const gcloud = require('google-cloud');
 const model = require('../model');
-const project_id = 'toplink-today';
+const project_id = 'web-push-rocks';
 const pubsub = gcloud.pubsub({
   projectId: project_id
 });
@@ -10,8 +10,8 @@ const pubsub = gcloud.pubsub({
   This service will get notified when we have a new subscription
 */
 
-const subscribeTopic = `projects/${project_id}/topics/subscribe-technology`;
-const newsTopic = `projects/${project_id}/topics/technology`;
+const subscribeTopic = `projects/${project_id}/topics/subscribe`;
+const newsTopic = `projects/${project_id}/topics/send`;
 
 // Create the topic
 pubsub.createTopic(subscribeTopic)
@@ -32,7 +32,6 @@ pubsub.createTopic(subscribeTopic)
           const privateKey = data.privateKey;
 
           const userSubscription = new model.Subscription(
-            newsTopic,
             endpoint,
             applicationServerKey,
             p256dh,
@@ -41,10 +40,10 @@ pubsub.createTopic(subscribeTopic)
           );
 
           // Scoping ick.
-          ((m) => 
+          ((m) =>
             userSubscription.put(endpoint).then(() => {
             // Successfully stored. Acknowledge
             m.ack();
-          }))(message);     
+          }))(message);
         });
       })
