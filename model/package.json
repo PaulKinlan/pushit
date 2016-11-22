@@ -1,0 +1,15 @@
+{
+  "name": "toplink-model",
+  "version": "1.0.0",
+  "description": "Toplinks model",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "google-cloud": "^0.43.0",
+    "googleapis": "^14.1.0"
+  }
+}
