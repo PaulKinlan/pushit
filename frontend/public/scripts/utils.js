@@ -21,7 +21,7 @@ var EventManager = new (function() {
       var handlers = events[name];
       if(!!handlers === false) return;
       handlers.forEach(function(handler) {
-        handler.call(data);
+        handler.call(this, data);
       });
       resolve();
     });
