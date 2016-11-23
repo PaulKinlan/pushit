@@ -50,11 +50,13 @@ EventManager.add('pushnotsupported', function() {
   subscribeButton.disabled = true;
 });
 
-EventManager.add('usersubscribed', function() {
+EventManager.add('usersubscribed', function(subscriptionData) {
   var unsubscribePara = document.getElementById('unsubscribe');
   var subscribeButton = document.getElementById('subscribe');
+  var subscribeDataElement = document.getElementById('dataElement');
   unsubscribePara.classList.add('visible');
   subscribeButton.innerText = 'Subscribed';
+  subscribeDataElement.innerText = ``;
 });
 
 EventManager.add('userunsubscribed', function() {
@@ -104,10 +106,10 @@ window.addEventListener('load', function() {
         }),
         body: JSON.stringify(subscriptionData)
         };
-      return fetch('/subscribe', fetchOptions);
+      return fetch('/subscribe', fetchOptions).then(() => subscriptionData);
     })
-    .then(function() {
-      EventManager.trigger('usersubscribed');
+    .then(function(subscriptionData) {
+      EventManager.trigger('usersubscribed', subscriptionData);
     })
     .catch(function() {
       EventManager.trigger('usersubsribefailed');
