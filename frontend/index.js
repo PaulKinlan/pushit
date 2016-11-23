@@ -34,7 +34,7 @@ app.post('/subscribe', jsonParser, (req, res) => {
 
   subscription.privateKey = instanceVAPIDKey.privateKey;
 
-  topic.publish({
+  subscribeTopic.publish({
     subscription: subscription
   });
   res.send('ok');
