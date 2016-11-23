@@ -1,7 +1,7 @@
 {
-  "name": "toplink-send-service",
+  "name": "webpush-rocks-send-service",
   "version": "1.0.0",
-  "description": "Toplinks Send Service",
+  "description": "WebPush Rocks Send Service",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

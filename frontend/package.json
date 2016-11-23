@@ -1,7 +1,7 @@
 {
-  "name": "toplink-frontend",
+  "name": "webpushrocks-frontend",
   "version": "1.0.0",
-  "description": "Toplinks Frontend",
+  "description": "Web Push Rocks Frontend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
