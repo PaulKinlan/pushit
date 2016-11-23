@@ -9,7 +9,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "google-cloud": "latest",
-    "googleapis": "latest"
+    "google-cloud": "^0.43.0"
   }
 }
