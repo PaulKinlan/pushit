@@ -10,6 +10,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "google-cloud": "^0.43.0",
-    "googleapis": "latest"
+    "googleapis": "^14.1.0"
   }
 }
