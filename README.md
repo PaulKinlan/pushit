@@ -16,12 +16,22 @@ This a set of small services that do one thing.
 Installing node 6 on Ubuntu
 ===========================
 
+sudo apt-get install nginx
+
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 ### Web Server Config
 
 coniguration/nginx.conf
+sudo apt-get install certbot
+sudo usermod -a -G www-data paul_kinlan
+
+sudo certbot certonly --webroot -w ./home/ -d webpush.rocks
+
+### App Server
+
+Set up the cloud repository.
 
 ### App Server Config
 
