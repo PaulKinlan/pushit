@@ -175,7 +175,7 @@ class Subscription extends Model {
   }
 
   static getByKey(id) {
-    return super.get('Subscription', id)
+    return super.get('Subscription', [id])
         .then(keyData => {
           const endpoint = keyData.endpoint;
           const aps = keyData.applicationServerKey;
@@ -187,7 +187,7 @@ class Subscription extends Model {
   }
 
   static getByEndpoint(endpoint) {
-    return super.get('Subscription', [endpoint])
+    return super.get('Subscription', ['endpoint', endpoint])
                 .then(keyData => {
                   const endpoint = keyData[0].endpoint;
                   const aps = keyData[0].applicationServerKey;
