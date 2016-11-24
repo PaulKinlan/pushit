@@ -65,6 +65,14 @@ class Model {
     });
   }
 
+  static getByKey(model, keyPath) {
+    return Model._init().then(() => {
+      const key = datastore.key([this.model].concat(keyPath), this.model);
+
+      return datastore.get(key);
+    });
+  }
+
   static get(model, filter) {
     return Model._init().then(() => {
       const q = datastore.createQuery(model);
@@ -166,6 +174,18 @@ class Subscription extends Model {
     return super.delete([this.endpoint]);
   }
 
+  static getByKey(id) {
+    return super.get('Subscription', id)
+        .then(keyData => {
+          const endpoint = keyData.endpoint;
+          const aps = keyData.applicationServerKey;
+          const p256dh = keyData.p256dh;
+          const authKey = keyData.authKey;
+          const privateKey = keyData.privateKey;
+          return new Subscription(endpoint, aps, p256dh, authKey, privateKey);
+        });
+  }
+
   static getByEndpoint(endpoint) {
     return super.get('Subscription', [endpoint])
                 .then(keyData => {
@@ -173,7 +193,7 @@ class Subscription extends Model {
                   const aps = keyData[0].applicationServerKey;
                   const p256dh = keyData[0].p256dh;
                   const authKey = keyData[0].authKey;
-                  const privateKey = entity.privateKey;
+                  const privateKey = keyData[0].privateKey;
                   return new Subscription(endpoint, aps, p256dh, authKey, privateKey);
                 });
   }
