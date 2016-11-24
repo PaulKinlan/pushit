@@ -1,4 +1,4 @@
-// Version 0.1
+// Version 0.11
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
@@ -12,7 +12,8 @@ self.addEventListener('push', e => {
 
   e.waitUntil(self.registration.showNotification(
     data.title, {
-      body: data.description,
+      body: data.description || "",
+      icon: data.icon || "",
       data: data
     }
   ))
@@ -22,5 +23,7 @@ self.addEventListener('notificationclick', e => {
   e.notification.close();
   const url = e.notification.data.url;
 
-  e.waitUntil(clients.openWindow(url));
+  if(url) {
+    e.waitUntil(clients.openWindow(url));
+  }
 });
