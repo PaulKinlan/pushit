@@ -65,6 +65,7 @@ pubsub.createTopic(sendTopic)
             });
           }, err=> {
             console.error(`Error ${err}`);
+            message.ack();
           })
           .catch(err => {
             console.error(`Error getting subscription: ${err}`);
