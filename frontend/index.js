@@ -40,7 +40,7 @@ app.post('/subscribe', jsonParser, (req, res) => {
   res.send('ok');
 });
 
-app.post('/send', bodyParser.urlencoded({ extended: true }), (req, res) => {
+app.post('/send', jsonParser, (req, res) => {
   const message = req.body;
   const id = req.query.id;
 
