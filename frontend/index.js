@@ -40,9 +40,11 @@ app.post('/subscribe', jsonParser, (req, res) => {
   res.send('ok');
 });
 
-app.post('/send', jsonParser, (req, res) => {
+app.post('/send', bodyParser.urlencoded({ extended: true }), (req, res) => {
   const message = req.body;
   const id = req.query.id;
+
+  console.log(`Message: ${message}`)
 
   sendTopic.publish({
     id: id,
