@@ -29,8 +29,9 @@ pubsub.createTopic(sendTopic)
           console.log(`Recieved Message.Id ${id}`);
           console.log(`Recieved Message.payload ${payload}`);
 
-          model.Subscription.getByEndpoint(id).then(sub => {
-
+          console.log(`Getting Endpoint`);
+          model.Subscription.getByEndpoint(id)
+          .then(sub => {
             console.log(`Got Subscription ${sub.endpoint}`);
             const applicationServerKey = sub.applicationServerKey;
             const endpoint = sub.endpoint;
@@ -62,6 +63,8 @@ pubsub.createTopic(sendTopic)
             .then(res => {
               message.ack();
             });
+          }, err=> {
+            console.error(`Error ${err}`);
           })
           .catch(err => {
             console.error(`Error getting subscription: ${err}`);
