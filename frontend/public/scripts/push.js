@@ -18,7 +18,7 @@ if(navigator.serviceWorker) {
     EventManager.trigger('pushsupported');
     var sub = reg.pushManager.getSubscription().then(function(s) {
       if(!!s) {
-        EventManager.trigger('usersubscribed', sub);
+        EventManager.trigger('usersubscribed', s);
       }
       return s;
     });
