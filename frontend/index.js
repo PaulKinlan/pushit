@@ -44,7 +44,7 @@ app.post('/send', bodyParser.urlencoded({ extended: true }), (req, res) => {
   const message = req.body;
   const id = req.query.id;
 
-  console.log(`Message: ${message}`)
+  console.log(message)
 
   sendTopic.publish({
     id: id,
