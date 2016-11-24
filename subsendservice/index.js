@@ -30,7 +30,7 @@ pubsub.createTopic(sendTopic)
           console.log(`Recieved Message.payload ${payload}`);
 
           console.log(`Getting Endpoint`);
-          model.Subscription.getByEndpoint(id)
+          model.Subscription.getByKey(id)
           .then(sub => {
             console.log(`Got Subscription ${sub.endpoint}`);
             const applicationServerKey = sub.applicationServerKey;
