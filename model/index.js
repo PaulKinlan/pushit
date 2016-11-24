@@ -169,7 +169,7 @@ class Subscription extends Model {
   }
 
   static getByEndpoint(endpoint) {
-    return super.get('Subscription', ['publicKey', endpoint])
+    return super.get('Subscription', [endpoint])
                 .then(keyData => {
                   const endpoint = keyData[0].endpoint;
                   const aps = keyData[0].applicationServerKey;
