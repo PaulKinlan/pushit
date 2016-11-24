@@ -27,9 +27,7 @@ pubsub.createTopic(sendTopic)
 
           console.log(`Recieved Message ${message.data}`);
           console.log(`Recieved Message.Id ${id}`);
-          console.log(`Recieved Message.payload ${payload}`);
 
-          console.log(`Getting Endpoint`);
           model.Subscription.getByEndpoint(id)
           .then(sub => {
             console.log(`Got Subscription ${sub.endpoint}`);
@@ -39,6 +37,7 @@ pubsub.createTopic(sendTopic)
             const auth = sub.authKey;
             const privateKey = sub.privateKey;
             const stringPayload = JSON.stringify(payload);
+            console.log(`Payload: ${stringPayload}`);
             const pushSubscription = {
               endpoint: endpoint,
               keys: {
