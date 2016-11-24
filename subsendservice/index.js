@@ -12,11 +12,12 @@ const pubsub = gcloud.pubsub({
 */
 
 const sendTopic = `projects/${project_id}/topics/send`;
+let topic;
 
 // Create the topic
 pubsub.createTopic(sendTopic)
       .then(data => topic = data[0])
-      .catch(data => topic = pubsub.topic(newsTopic))
+      .catch(data => topic = pubsub.topic(sendTopic))
       .then(topic => topic.subscribe('subscription-send-service', {reuseExisting:true}))
       .then(data => {
         const subscription = data[0];

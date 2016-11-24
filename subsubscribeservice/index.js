@@ -12,6 +12,7 @@ const pubsub = gcloud.pubsub({
 
 const subscribeTopic = `projects/${project_id}/topics/subscribe`;
 const newsTopic = `projects/${project_id}/topics/send`;
+let topic;
 
 // Create the topic
 pubsub.createTopic(subscribeTopic)
