@@ -32,11 +32,26 @@ pubsub.createTopic(sendTopic)
 
           model.Subscription.getByEndpoint(id).then(sub => {
 
+            console.log(`Got Subscription ${sub.endpoint}`);
+            const applicationServerKey = sub.applicationServerKey;
+            const endpoint = sub.endpoint;
+            const p256dh = sub.p256dh;
+            const auth = sub.authKey;
+            const privateKey = sub.privateKey;
+            const stringPayload = JSON.stringify(payload);
+            const pushSubscription = {
+              endpoint: endpoint,
+              keys: {
+                p256dh: p256dh,
+                auth: auth
+              }
+            };
+
             webpush.setVapidDetails('https://webpush.rocks', applicationServerKey, privateKey);
 
             webpush.sendNotification(
               pushSubscription,
-              JSON.stringify(payload)
+              stringPayload
             )
             .catch(err => {
               if(err.statusCode && err.statusCode == 410) {

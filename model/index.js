@@ -130,10 +130,6 @@ class Subscription extends Model {
     this._privateKey = privateKey;
   }
 
-  get topic() {
-    return this._topic;
-  }
-
   get endpoint() {
     return this._endpoint;
   }
