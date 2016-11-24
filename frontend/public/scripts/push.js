@@ -54,16 +54,30 @@ EventManager.add('usersubscribed', function(subscriptionData) {
   var unsubscribePara = document.getElementById('unsubscribe');
   var subscribeButton = document.getElementById('subscribe');
   var subscribeDataElement = document.getElementById('dataElement');
+  var exampleCurl = document.getElementById('exampleCurl');
   unsubscribePara.classList.add('visible');
+  subscribeDataElement.classList.add('visible');
+  exampleCurl.classList.add('visible');
   subscribeButton.innerText = 'Subscribed';
   subscribeDataElement.innerText = `${location.origin}/send?id=${subscriptionData.endpoint}`;
+  exampleCurl.innerText = `curl -XPOST -H "Content-type: application/json" -d '{
+    "title": "This is a test",
+    "description": "This is a longer description"
+}' '${location.origin}/send?id=${subscriptionData.endpoint}'`;
 });
 
 EventManager.add('userunsubscribed', function() {
   var unsubscribePara = document.getElementById('unsubscribe');
   var subscribeButton = document.getElementById('subscribe');
+  var subscribeDataElement = document.getElementById('dataElement');
+  var exampleCurl = document.getElementById('exampleCurl')
+
   unsubscribePara.classList.remove('visible');
+  subscribeDataElement.classList.remove('visible');
+  exampleCurl.classList.remove('visible');
   subscribeButton.innerText = 'Subscribe';
+  subscribeDataElement.innerText = '';
+  exampleCurl.innerText = '';
 });
 
 EventManager.add('pushunsubscribed', function() {

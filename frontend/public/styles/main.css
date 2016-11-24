@@ -48,13 +48,17 @@ main button:active {
   box-shadow: none;
 }
 
-main button + p {
+main button + p, main button + pre {
   color: white;
   padding: 2em;
   font-size: 1em;
 }
 
-#unsubscribe {
+main button + pre {
+
+}
+
+#unsubscribe, #exampleCurl, #dataElement {
   display: none;
 }
 
@@ -62,6 +66,18 @@ main button + p {
   color: white;
 }
 
-#unsubscribe.visible {
+#unsubscribe.visible, #exampleCurl.visible, #dataElement.visible {
   display: block;
+}
+
+#dataElement, #exampleCurl {
+  background-color: rgba(255,255,255,0.2);
+  padding: 1em;
+  border-radius: 1em;
+  max-width: 80%;
+  word-wrap: break-word;
+  word-break: break-all;
+  box-shadow: inset #3f51b5 1px 1px 1px 1px;
+  font-family: monospace;
+  font-size: 1.2em;
 }
