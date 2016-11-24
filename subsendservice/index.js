@@ -26,7 +26,9 @@ pubsub.createTopic(sendTopic)
           const id = message.data.id;
           const payload = message.data.message;
 
-          console.log(`Recieved Message ${message}`);
+          console.log(`Recieved Message ${message.data}`);
+          console.log(`Recieved Message.Id ${id}`);
+          console.log(`Recieved Message.payload ${payload}`);
 
           model.Subscription.getByEndpoint(id).then(sub => {
 
