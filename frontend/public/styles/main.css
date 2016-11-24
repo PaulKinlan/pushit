@@ -74,7 +74,7 @@ main button + pre {
   background-color: rgba(255,255,255,0.2);
   padding: 1em;
   border-radius: 1em;
-  max-width: 80%;
+  max-width: 80vw;
   word-wrap: break-word;
   word-break: break-all;
   box-shadow: inset #3f51b5 1px 1px 1px 1px;
