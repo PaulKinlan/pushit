@@ -48,6 +48,10 @@ pubsub.createTopic(sendTopic)
             .then(res => {
               message.ack();
             });
+          })
+          .catch(err => {
+            console.error(`Error getting subscription: ${err}`);
+            message.ack();
           });
         });
       });
