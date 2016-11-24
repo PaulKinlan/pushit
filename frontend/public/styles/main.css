@@ -75,6 +75,7 @@ main button + pre {
   padding: 1em;
   border-radius: 1em;
   max-width: 80vw;
+  overflow-x: auto;
   word-wrap: break-word;
   word-break: break-all;
   box-shadow: inset #3f51b5 1px 1px 1px 1px;
