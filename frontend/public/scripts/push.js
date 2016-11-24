@@ -56,7 +56,7 @@ EventManager.add('usersubscribed', function(subscriptionData) {
   var subscribeDataElement = document.getElementById('dataElement');
   unsubscribePara.classList.add('visible');
   subscribeButton.innerText = 'Subscribed';
-  subscribeDataElement.innerText = ``;
+  subscribeDataElement.innerText = `${location.origin}/send?id=${subscriptionData.endpoint}`;
 });
 
 EventManager.add('userunsubscribed', function() {

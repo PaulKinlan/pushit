@@ -171,13 +171,12 @@ class Subscription extends Model {
   static getByEndpoint(endpoint) {
     return super.get('Subscription', ['publicKey', endpoint])
                 .then(keyData => {
-                  const topic = keyData[0].topic;
                   const endpoint = keyData[0].endpoint;
                   const aps = keyData[0].applicationServerKey;
                   const p256dh = keyData[0].p256dh;
                   const authKey = keyData[0].authKey;
                   const privateKey = entity.privateKey;
-                  return new Subscription(topic, endpoint, aps, p256dh, authKey, privateKey);
+                  return new Subscription(endpoint, aps, p256dh, authKey, privateKey);
                 });
   }
 }

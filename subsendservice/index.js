@@ -22,23 +22,27 @@ pubsub.createTopic(sendTopic)
         const subscription = data[0];
         subscription.on('message', message => {
           // We only expect one message a day so this for now will be super super lightweight
+          const id = message.data.id;
           const payload = message.data.message;
 
-          webpush.setVapidDetails('https://webpush.rocks',applicationServerKey, privateKey);
+          model.Subscription.getByEndpoint(id).then(sub => {
 
-          webpush.sendNotification(
-            pushSubscription,
-            JSON.stringify(payload)
-          )
-          .catch(err => {
-            if(err.statusCode && err.statusCode == 410) {
-              console.log('Subscription not registered');
-              // Delete the subscription and ack
-              return topic.delete();
-            }
-          })
-          .then(res => {
-            message.ack();
+            webpush.setVapidDetails('https://webpush.rocks', applicationServerKey, privateKey);
+
+            webpush.sendNotification(
+              pushSubscription,
+              JSON.stringify(payload)
+            )
+            .catch(err => {
+              if(err.statusCode && err.statusCode == 410) {
+                console.log('Subscription not registered');
+                // Delete the subscription and ack
+                return topic.delete();
+              }
+            })
+            .then(res => {
+              message.ack();
+            });
           });
         });
       });

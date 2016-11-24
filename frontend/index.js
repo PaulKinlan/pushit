@@ -42,10 +42,10 @@ app.post('/subscribe', jsonParser, (req, res) => {
 
 app.post('/send', jsonParser, (req, res) => {
   const message = req.body;
-  const subscription = {}
+  const id = req.query.id;
 
   sendTopic.publish({
-    subscription: subscription,
+    id: id,
     message: message
   });
 
