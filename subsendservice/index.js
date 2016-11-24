@@ -26,6 +26,8 @@ pubsub.createTopic(sendTopic)
           const id = message.data.id;
           const payload = message.data.message;
 
+          console.log(`Recieved Message ${message}`);
+
           model.Subscription.getByEndpoint(id).then(sub => {
 
             webpush.setVapidDetails('https://webpush.rocks', applicationServerKey, privateKey);
