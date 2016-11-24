@@ -68,7 +68,9 @@ class Model {
   static get(model, filter) {
     return Model._init().then(() => {
       const q = datastore.createQuery(model);
-      q.filter(filter[0], '=', filter[1]);
+      if(filter !== undefined) {
+        q.filter(filter[0], '=', filter[1]);
+      }
       return datastore.runQuery(q).then(result => result[0]);
     });
   }
