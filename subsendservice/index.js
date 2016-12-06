@@ -16,9 +16,14 @@ const sendTopic = `projects/${project_id}/topics/send`;
 // Create the topic
 pubsub.createTopic(sendTopic)
       .then(data => data[0])
-      .catch(data => pubsub.topic(sendTopic))
+      .catch(data => {
+        console.log('Error creating topic')
+        console.log(data);
+        return pubsub.topic(sendTopic);
+      })
       .then(topic => topic.subscribe('subscription-send-service', {reuseExisting:true}))
       .then(data => {
+        console.log('waiting for messages', data)
         const subscription = data[0];
         subscription.on('message', message => {
           // We only expect one message a day so this for now will be super super lightweight
