@@ -22,8 +22,9 @@ pubsub.createTopic(sendTopic)
       })
       .then(topic => {
         console.log('subscribing to topic')
-        return topic.subscribe('sub-send-subscription',{reuseExisting:true});
+        return topic.subscribe('sub-send-subscription');
       })
+      .catch(() => topic.subscription('sub-send-subscription'))
       .then(data => {
         console.log('waiting for messages', data)
         const subscription = data[0];
