@@ -12,15 +12,16 @@ const pubsub = gcloud.pubsub({
 */
 
 const sendTopic = `projects/${project_id}/topics/send`;
+let topic;
 
 // Create the topic
 pubsub.createTopic(sendTopic)
       .then(data => data[0])
       .catch(data => {
         console.log('Error creating topic')
-        return pubsub.topic(sendTopic);
+        topic = pubsub.topic(sendTopic);
       })
-      .then(topic => {
+      .then(() => {
         console.log('subscribing to topic')
         return topic.subscribe('sub-send-subscription');
       })
