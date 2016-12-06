@@ -22,7 +22,7 @@ pubsub.createTopic(sendTopic)
       })
       .then(topic => {
         console.log('subscribing to topic')
-        return topic.subscribe();
+        return topic.subscribe('sub-send-subscription');
       })
       .then(data => {
         console.log('waiting for messages', data)
