@@ -18,12 +18,11 @@ pubsub.createTopic(sendTopic)
       .then(data => data[0])
       .catch(data => {
         console.log('Error creating topic')
-        console.log(data);
         return pubsub.topic(sendTopic);
       })
       .then(topic => {
-        console.log('subscribing to topic', topic)
-        return topic.subscribe('subscription-send-service', {reuseExisting:true});
+        console.log('subscribing to topic')
+        return topic.subscribe();
       })
       .then(data => {
         console.log('waiting for messages', data)
