@@ -15,8 +15,8 @@ const sendTopic = `projects/${project_id}/topics/send`;
 
 // Create the topic
 pubsub.createTopic(sendTopic)
-      .then(data => topic = data[0])
-      .catch(data => topic = pubsub.topic(sendTopic))
+      .then(data => data[0])
+      .catch(data => pubsub.topic(sendTopic))
       .then(topic => topic.subscribe('subscription-send-service', {reuseExisting:true}))
       .then(data => {
         const subscription = data[0];
@@ -56,7 +56,7 @@ pubsub.createTopic(sendTopic)
               if(err.statusCode && err.statusCode == 410) {
                 console.log('Subscription not registered');
                 // Delete the subscription and ack
-                return topic.delete();
+                return sub.delete();
               }
             })
             .then(res => {

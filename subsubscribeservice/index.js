@@ -15,8 +15,8 @@ const newsTopic = `projects/${project_id}/topics/send`;
 
 // Create the topic
 pubsub.createTopic(subscribeTopic)
-      .then(data => topic = data[0])
-      .catch(data => topic = pubsub.topic(subscribeTopic))
+      .then(data => data[0])
+      .catch(data => pubsub.topic(subscribeTopic))
       .then(topic => topic.subscribe('subscription-storage-service', {reuseExisting:true}))
       .then(d => {
         var subscription = d[0];
