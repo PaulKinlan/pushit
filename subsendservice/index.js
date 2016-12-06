@@ -21,7 +21,10 @@ pubsub.createTopic(sendTopic)
         console.log(data);
         return pubsub.topic(sendTopic);
       })
-      .then(topic => topic.subscribe('subscription-send-service', {reuseExisting:true}))
+      .then(topic => {
+        console.log('subscribing to topic', topic)
+        return topic.subscribe('subscription-send-service', {reuseExisting:true});
+      })
       .then(data => {
         console.log('waiting for messages', data)
         const subscription = data[0];
