@@ -63,7 +63,8 @@ EventManager.add('usersubscribed', function(subscriptionData) {
   exampleCurl.innerText = `curl -XPOST -H "Content-type: application/json" -d '{
     "title": "This is a test",
     "description": "This is a longer description",
-    "icon": "https://pbs.twimg.com/profile_images/2736788281/13811f0063041a72d7ea6ede7b89fedd.png"
+    "icon": "https://pbs.twimg.com/profile_images/2736788281/13811f0063041a72d7ea6ede7b89fedd.png",
+    "image": "https://pbs.twimg.com/profile_images/2736788281/13811f0063041a72d7ea6ede7b89fedd.png"
 }' '${location.origin}/send?id=${subscriptionData.endpoint}'`;
 });
 
