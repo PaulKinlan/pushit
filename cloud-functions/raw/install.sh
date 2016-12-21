@@ -10,7 +10,7 @@ gsutil mb -p web-push-rocks gs://web-push-rocks-source-bucket
 gsutil mb -p web-push-rocks gs://web-push-rocks-output-bucket
 
 # Create the topic that we send function calls to
-gcloud beta pubsub topics create send-github
+gcloud beta pubsub topics create send-raw
 
 # Create the cloud function [TEMPLATE]
 gcloud alpha functions deploy send-raw \
