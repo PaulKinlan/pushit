@@ -59,16 +59,16 @@ app.post('/send-raw', jsonParser, (req, res) => {
   const message = req.body;
   const id = req.query.id;
   const processor = req.query.processor;
-
-  // topic must exist
+  
+  // Topic must exist
   const rawTopic = pubsub.topic(`projects/${project_id}/topics/send-${processor}`);
   rawTopic.publish({
       id: id,
       processor: processor,
       message: message
-    });
-
-  res.send('ok');
+    })
+    .then(() => res.send('ok'))
+    .catch(() => res.send('error'))
 });
 
 app.listen(3000, () => {
