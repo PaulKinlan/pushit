@@ -1,0 +1,14 @@
+{
+  "name": "cloud-push-functions-raw",
+  "version": "1.0.0",
+  "description": "Cloud push functions: RAW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paul Kinlan",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "google-cloud": "latest"
+  }
+}
