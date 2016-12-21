@@ -66,8 +66,6 @@ app.post('/send-raw', (req, res) => {
   const id = req.query.id;
   const processor = req.query.processor;
   
-  console.log('body request', id, processor, req.body)
-
   // Topic must exist
   const rawTopic = pubsub.topic(`projects/${project_id}/topics/send-${processor}`);
   rawTopic.publish({
