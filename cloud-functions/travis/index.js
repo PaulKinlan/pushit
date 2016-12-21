@@ -15,7 +15,9 @@ const sendTopicId = `projects/${project_id}/topics/send`;
 exports.run = function subscribe(event, callback) {
   // The Cloud Pub/Sub Message object.
   const pubsubMessage = event.data;
-  const message = JSON.parse(pubsubMessage.message);
+  const message = pubsubMessage.message;
+
+  console.log(message);
 
   const sendTopic = pubsub.topic(sendTopicId);
   const transformedMessage = {
@@ -28,10 +30,6 @@ exports.run = function subscribe(event, callback) {
     id: id,
     message: transformedMessage
   });
-
-  // We're just going to log the message to prove that
-  // it worked.
-  console.log(Buffer.from(pubsubMessage.data, 'base64').toString());
 
   // Don't forget to call the callback.
   callback();
