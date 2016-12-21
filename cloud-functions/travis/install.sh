@@ -10,7 +10,7 @@ gsutil mb -p web-push-rocks gs://web-push-rocks-source-bucket
 gsutil mb -p web-push-rocks gs://web-push-rocks-output-bucket
 
 # Create the topic that we send function calls to
-gcloud beta pubsub topics create send-travis
+gcloud beta pubsub topics create send-travis --project web-push-rocks
 
 # Create the cloud function [TEMPLATE]
 gcloud alpha functions deploy send-travis \
