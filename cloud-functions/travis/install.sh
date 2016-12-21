@@ -6,8 +6,6 @@
 
 # Create the buckets
 gsutil mb -p web-push-rocks gs://web-push-rocks-staging-bucket
-gsutil mb -p web-push-rocks gs://web-push-rocks-source-bucket
-gsutil mb -p web-push-rocks gs://web-push-rocks-output-bucket
 
 # Create the topic that we send function calls to
 gcloud beta pubsub topics create send-travis --project web-push-rocks
