@@ -55,9 +55,12 @@ EventManager.add('usersubscribed', function(subscriptionData) {
   var subscribeButton = document.getElementById('subscribe');
   var subscribeDataElement = document.getElementById('dataElement');
   var exampleCurl = document.getElementById('exampleCurl');
+  var testBtn = document.getElementById('test');
+
   unsubscribePara.classList.add('visible');
   subscribeDataElement.classList.add('visible');
   exampleCurl.classList.add('visible');
+  testBtn.classList.add('visible');
   subscribeButton.innerText = 'Subscribed';
   subscribeDataElement.innerText = `${location.origin}/send?id=${subscriptionData.endpoint}`;
   exampleCurl.innerText = `curl -XPOST -H "Content-type: application/json" -d '{
@@ -68,15 +71,34 @@ EventManager.add('usersubscribed', function(subscriptionData) {
 }' '${location.origin}/send?id=${subscriptionData.endpoint}'`;
 });
 
+EventManager.add('sendtestmessage', function(subscriptionData) {
+  var fetchOptions = {
+    method: 'post',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({
+      "title": "This is a test",
+      "description": "This is a longer description",
+      "icon": "https://pbs.twimg.com/profile_images/2736788281/13811f0063041a72d7ea6ede7b89fedd.png",
+      "image": "https://pbs.twimg.com/profile_images/2736788281/13811f0063041a72d7ea6ede7b89fedd.png"
+    })
+  };
+  
+  return fetch(`${location.origin}/send?id=${subscriptionData.endpoint}`, fetchOptions);
+});
+
 EventManager.add('userunsubscribed', function() {
   var unsubscribePara = document.getElementById('unsubscribe');
   var subscribeButton = document.getElementById('subscribe');
   var subscribeDataElement = document.getElementById('dataElement');
-  var exampleCurl = document.getElementById('exampleCurl')
+  var exampleCurl = document.getElementById('exampleCurl');
+  var testBtn = document.getElementById('test');
 
   unsubscribePara.classList.remove('visible');
   subscribeDataElement.classList.remove('visible');
   exampleCurl.classList.remove('visible');
+  testBtn.classList.remove('visible');
   subscribeButton.innerText = 'Subscribe';
   subscribeDataElement.innerText = '';
   exampleCurl.innerText = '';
@@ -90,6 +112,8 @@ EventManager.add('pushunsubscribed', function() {
 window.addEventListener('load', function() {
   var subscribe = document.getElementById('subscribe');
   var unsubscribe = document.getElementById('unsubscribe');
+  var testBtn = document.getElementById('test');
+
   subscribe.addEventListener('click', function() {
 
     const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
@@ -137,8 +161,16 @@ window.addEventListener('load', function() {
       if(!!sub) {
         return sub.unsubscribe().then(() => {
           pushSubscription = Promise.resolve(null);
-          EventManager.trigger('userunsubscribed')
+          EventManager.trigger('userunsubscribed');
         });
+      }
+    });
+  });
+
+  testBtn.addEventListener('click', function() {
+    pushSubscription.then(sub => {
+      if(!!sub) {
+        EventManager.trigger('sendtestmessage', sub);
       }
     });
   });

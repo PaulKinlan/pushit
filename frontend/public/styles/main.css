@@ -59,7 +59,7 @@ main button + pre {
 
 }
 
-#unsubscribe, #exampleCurl, #dataElement {
+#unsubscribe, #exampleCurl, #dataElement, #test {
   display: none;
 }
 
@@ -67,7 +67,7 @@ main button + pre {
   color: white;
 }
 
-#unsubscribe.visible, #exampleCurl.visible, #dataElement.visible {
+#unsubscribe.visible, #exampleCurl.visible, #dataElement.visible, #test.visible {
   display: block;
 }
 
