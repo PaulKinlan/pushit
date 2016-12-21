@@ -15,6 +15,12 @@ const subscribeTopicId = `projects/${project_id}/topics/subscribe`;
 const sendTopicId = `projects/${project_id}/topics/send`;
 const jsonParser = bodyParser.json();
 
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json 
+app.use(bodyParser.json())
+
 let subscribeTopic;
 let sendTopic;
 let sendRawTopic;
@@ -55,7 +61,7 @@ app.post('/send', jsonParser, (req, res) => {
   res.send('ok');
 });
 
-app.post('/send-raw', jsonParser, (req, res) => {
+app.post('/send-raw', (req, res) => {
   const message = req.body;
   const id = req.query.id;
   const processor = req.query.processor;
