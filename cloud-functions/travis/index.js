@@ -16,6 +16,7 @@ exports.run = function subscribe(event, callback) {
   // The Cloud Pub/Sub Message object.
   const pubsubMessage = event.data;
   const data = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString());
+  const id = data.id;
   const msgObject = JSON.parse(data.message.payload);
 
   const sendTopic = pubsub.topic(sendTopicId);
