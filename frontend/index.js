@@ -96,10 +96,5 @@ app.listen(3000, () => {
         .then(data => sendTopic = data[0])
         .catch(data => sendTopic = pubsub.topic(sendTopicId));
 
- // Create the topic that will be used to send the broadcasts to cloud function
-  pubsub.createTopic(sendRawTopicId)
-        .then(data => sendRawTopic = data[0])
-        .catch(data => sendRawTopic = pubsub.topic(sendRawTopicId));
-
   console.log('Front-end is listenting on port 3000');
 });
