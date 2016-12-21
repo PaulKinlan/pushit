@@ -60,18 +60,13 @@ app.post('/send-raw', jsonParser, (req, res) => {
   const id = req.query.id;
   const processor = req.query.processor;
 
-  const sendRawTopicId = `projects/${project_id}/topics/send-${processor}`;
-  
-  pubsub.createTopic(sendRawTopicId)
-        .then(data => rawTopic = data[0])
-        .catch(data => rawTopic = pubsub.topic(sendRawTopicId))
-        .then(() => {
-            rawTopic.publish({
-              id: id,
-              processor: processor,
-              message: message
-            });
-        });
+  // topic must exist
+  const rawTopic = pubsub.topic(`projects/${project_id}/topics/send-${processor}`);
+  rawTopic.publish({
+      id: id,
+      processor: processor,
+      message: message
+    });
 
   res.send('ok');
 });
