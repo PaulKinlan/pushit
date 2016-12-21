@@ -15,16 +15,15 @@ const sendTopicId = `projects/${project_id}/topics/send`;
 exports.run = function subscribe(event, callback) {
   // The Cloud Pub/Sub Message object.
   const pubsubMessage = event.data;
-  const message = pubsubMessage.message;
-
-  console.log(message);
+  const data = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString());
+  const msgObject = JSON.parse(data.message.payload);
 
   const sendTopic = pubsub.topic(sendTopicId);
   const transformedMessage = {
-    "title": `Travis: ${message.status_message}`,
-    "description": `${message.status_message}`,
-    "url": `${message.build_url}`
-  }
+    "title": `Travis: ${msgObject.repository.name} ${msgObject.status_message}`,
+    "description": `${msgObject.status_message}`,
+    "url": `${msgObject.build_url}`
+  };
 
   sendTopic.publish({
     id: id,
