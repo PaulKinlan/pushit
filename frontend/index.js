@@ -13,7 +13,6 @@ const pubsub = gcloud.pubsub({
 });
 const subscribeTopicId = `projects/${project_id}/topics/subscribe`;
 const sendTopicId = `projects/${project_id}/topics/send`;
-const sendRawTopicId = `projects/${project_id}/topics/send-raw`;
 const jsonParser = bodyParser.json();
 
 let subscribeTopic;
@@ -61,18 +60,21 @@ app.post('/send-raw', jsonParser, (req, res) => {
   const id = req.query.id;
   const processor = req.query.processor;
 
-  console.log(message)
-
-  sendRawTopic.publish({
-    id: id,
-    processor: processor,
-    message: message
-  });
+  const sendRawTopicId = `projects/${project_id}/topics/send-${processor}`;
+  
+  pubsub.createTopic(sendRawTopicId)
+        .then(data => rawTopic = data[0])
+        .catch(data => rawTopic = pubsub.topic(sendRawTopicId))
+        .then(() => {
+            rawTopic.publish({
+              id: id,
+              processor: processor,
+              message: message
+            });
+        });
 
   res.send('ok');
 });
-
-
 
 app.listen(3000, () => {
   app.set('views', path.join(__dirname , 'views'));
