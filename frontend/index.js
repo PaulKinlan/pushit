@@ -13,10 +13,12 @@ const pubsub = gcloud.pubsub({
 });
 const subscribeTopicId = `projects/${project_id}/topics/subscribe`;
 const sendTopicId = `projects/${project_id}/topics/send`;
+const sendRawTopicId = `projects/${project_id}/topics/send-raw`;
 const jsonParser = bodyParser.json();
 
 let subscribeTopic;
 let sendTopic;
+let sendRawTopic;
 let instanceVAPIDKey;
 
 app.use(express.static('public'));
@@ -54,6 +56,22 @@ app.post('/send', jsonParser, (req, res) => {
   res.send('ok');
 });
 
+app.post('/send-raw', jsonParser, (req, res) => {
+  const message = req.body;
+  const id = req.query.id;
+  const processor = req.query.processor;
+
+  console.log(message)
+
+  sendRawTopic.publish({
+    id: id,
+    processor: processor,
+    message: message
+  });
+
+  res.send('ok');
+});
+
 
 
 app.listen(3000, () => {
@@ -75,6 +93,11 @@ app.listen(3000, () => {
   pubsub.createTopic(sendTopicId)
         .then(data => sendTopic = data[0])
         .catch(data => sendTopic = pubsub.topic(sendTopicId));
+
+ // Create the topic that will be used to send the broadcasts to cloud function
+  pubsub.createTopic(sendRawTopicId)
+        .then(data => sendRawTopic = data[0])
+        .catch(data => sendRawTopic = pubsub.topic(sendRawTopicId));
 
   console.log('Front-end is listenting on port 3000');
 });
