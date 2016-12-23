@@ -8,7 +8,6 @@ const sendTopicId = `projects/${project_id}/topics/send`;
 
 
 const transformMessage = (type, payload) => {
-
   switch(type) {
     case 'issues':
       return {
@@ -21,13 +20,13 @@ const transformMessage = (type, payload) => {
       return {
         "title": `Github ${type}: ${payload.repository.full_name}`,
         "description": `${payload.head_commit.message}`,
-        "icon": `${payload.semder.avatar_url}`,
+        "icon": `${payload.sender.avatar_url}`,
         "url": `${payload.head_commit.url}`
       };
     default:
       return {
-        "title": `Github ${type} on ${msgObject.repository.full_name}`,
-        "url": `${msgObject.repository.html_url}`
+        "title": `Github ${type} on ${payload.repository.full_name}`,
+        "url": `${payload.repository.html_url}`
       };
   }
 
@@ -48,7 +47,7 @@ exports.run = function subscribe(event, callback) {
   const msgObject = data.message; 
   const sendTopic = pubsub.topic(sendTopicId);
 
-  const eventType = headers['X-GitHub-Event'];
+  const eventType = headers['x-github-event'];
 
   sendTopic.publish({
     id: id,
