@@ -6,6 +6,33 @@ const pubsub = gcloud.pubsub({
 
 const sendTopicId = `projects/${project_id}/topics/send`;
 
+
+const transformMessage = (type, payload) => {
+
+  switch(type) {
+    case 'issues':
+      return {
+        "title": `Github Issue ${payload.action}: ${payload.repository.full_name}`,
+        "description": `${payload.issue.title}`,
+        "icon": `${payload.issue.user.avatar_url}`,
+        "url": `${payload.issue.html_url}`
+      };
+    case 'push':
+      return {
+        "title": `Github ${type}: ${payload.repository.full_name}`,
+        "description": `${payload.head_commit.message}`,
+        "icon": `${payload.semder.avatar_url}`,
+        "url": `${payload.head_commit.url}`
+      };
+    default:
+      return {
+        "title": `Github ${type} on ${msgObject.repository.full_name}`,
+        "url": `${msgObject.repository.html_url}`
+      };
+  }
+
+};
+
 /**
  * Triggered from a message on a Cloud Pub/Sub topic.
  *
@@ -17,13 +44,16 @@ exports.run = function subscribe(event, callback) {
   const pubsubMessage = event.data;
   const data = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString());
   const id = data.id;
-  const msgObject = JSON.parse(data.message.payload);
-
+  const headers = data.headers;
+  const msgObject = data.message; 
   const sendTopic = pubsub.topic(sendTopicId);
 
-  // We're just going to log the message to prove that-
-  // it worked.
-  console.log(Buffer.from(pubsubMessage.data, 'base64').toString());
+  const eventType = headers['X-GitHub-Event'];
+
+  sendTopic.publish({
+    id: id,
+    message: transformMessage(eventType, msgObject)
+  });
 
   // Don't forget to call the callback.
   callback();
