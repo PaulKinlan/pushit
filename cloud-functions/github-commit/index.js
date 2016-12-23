@@ -16,6 +16,20 @@ const transformMessage = (type, payload) => {
         "icon": `${payload.issue.user.avatar_url}`,
         "url": `${payload.issue.html_url}`
       };
+    case 'issue_comment':
+      return {
+        "title": `Github Issue Comment ${payload.action}: ${payload.repository.full_name}`,
+        "description": `${payload.issue.title} - ${payload.comment.body}`,
+        "icon": `${payload.comment.user.avatar_url}`,
+        "url": `${payload.comment.html_url}`
+      };
+    case 'pull_request':
+      return {
+        "title": `Github PR ${payload.action}: ${payload.repository.full_name}`,
+        "description": `${payload.pull_request.title} - ${payload.pull_request.body}`,
+        "icon": `${payload.pull_request.user.avatar_url}`,
+        "url": `${payload.pull_request.html_url}`
+      };
     case 'push':
       return {
         "title": `Github ${type}: ${payload.repository.full_name}`,
