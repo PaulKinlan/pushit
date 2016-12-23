@@ -71,6 +71,7 @@ app.post('/send-raw', (req, res) => {
   rawTopic.publish({
       id: id,
       processor: processor,
+      headers: req.headers,
       message: message
     })
     .then(() => res.send('ok'))
