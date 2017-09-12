@@ -1,4 +1,5 @@
 let pushSubscription;
+let comlink;
 
 if(navigator.serviceWorker) {
   navigator.serviceWorker.register('sw.js')
@@ -113,6 +114,11 @@ window.addEventListener('load', function() {
   var subscribe = document.getElementById('subscribe');
   var unsubscribe = document.getElementById('unsubscribe');
   var testBtn = document.getElementById('test');
+
+  if(window.opener) {
+    // set up comlink;
+    setupComlink(window.opener);
+  }
 
   subscribe.addEventListener('click', function() {
 

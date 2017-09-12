@@ -42,3 +42,27 @@ var EventManager = new (function() {
     handlers.splice(handlerIdx);
   };
 });
+
+class PushManager {
+  constructor() {
+  }
+
+  get subscriptionId() {
+      //global var ick...
+      if(pushSubscription) {
+          return `${location.origin}/send?id=${pushSubscription.endpoint}`;
+      }
+      else {
+          return;
+      }
+  }
+}
+
+var setupComlink = function(opener) {
+   // We are ready. Tell the opener.
+   var channel = new MessageChannel();
+   var port1 = channel.port1;
+   comlink = Comlink.proxy(port1);
+   comlink.expose(PushManager);
+   opener.postMessage({'cmd': 'READY'}, '*', [channel.port2]);
+}

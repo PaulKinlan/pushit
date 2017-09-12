@@ -4,6 +4,7 @@
   "description": "Web Push Rocks Frontend",
   "main": "index.js",
   "scripts": {
+    "start": "cp node_modules/comlinkjs/comlink.global.js public/scripts/comlink.js && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +14,7 @@
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "google-cloud": "^0.43.0",
-    "web-push": "^3.1.0"
+    "web-push": "^3.1.0",
+    "comlinkjs": "*"
   }
 }
