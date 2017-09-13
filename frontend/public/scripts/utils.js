@@ -47,7 +47,7 @@ class PushManager {
   constructor() {
   }
 
-  get subscriptionId() {
+  subscriptionId() {
       //global var ick...
       if(pushSubscription) {
           return `${location.origin}/send?id=${pushSubscription.endpoint}`;
@@ -63,6 +63,6 @@ var setupComlink = function(opener) {
    var channel = new MessageChannel();
    var port1 = channel.port1;
    comlink = Comlink.proxy(port1);
-   comlink.expose(PushManager);
+   comlink.expose({PushManager});
    opener.postMessage({'cmd': 'READY'}, '*', [channel.port2]);
 }
