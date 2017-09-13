@@ -62,6 +62,6 @@ var setupComlink = function(opener) {
    // We are ready. Tell the opener.
    var channel = new MessageChannel();
    var port1 = channel.port1;
-   Comlink.expose({PushManager});
+   Comlink.expose({PushManager}, port1);
    opener.postMessage({'cmd': 'READY'}, '*', [channel.port2]);
 }
