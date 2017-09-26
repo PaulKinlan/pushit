@@ -18,7 +18,7 @@ let topic;
 pubsub.createTopic(sendTopic)
       .then(data => data[0])
       .catch(data => {
-        console.log('Error creating topic')
+        console.error('Error creating topic')
         topic = pubsub.topic(sendTopic);
       })
       .then(() => {
@@ -42,8 +42,8 @@ pubsub.createTopic(sendTopic)
             console.log(`Got Subscription ${sub.endpoint}`);
             if(sub === undefined) {
               console.error(`Sub undefined`, id);
-              message.ack()
-              return
+              message.ack();
+              return;
             }
             const applicationServerKey = sub.applicationServerKey;
             const endpoint = sub.endpoint;
@@ -68,7 +68,7 @@ pubsub.createTopic(sendTopic)
             )
             .catch(err => {
               if(err.statusCode && err.statusCode == 410) {
-                console.log('Subscription not registered');
+                console.error('Subscription not registered');
                 // Delete the subscription and ack
                 return sub.delete();
               }
