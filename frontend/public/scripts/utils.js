@@ -48,15 +48,15 @@ class PushManager {
   }
 
   async subscriptionId() {
-      //global var ick...
-      let reg = await navigator.serviceWorker.getRegistration();
-      let sub = await reg.pushManager.getSubscription();
-      if(sub) {
-          return `${location.origin}/send?id=${sub.endpoint}`;
-      }
-      else {
-          return ``;
-      }
+    //global var ick...
+    let reg = await navigator.serviceWorker.getRegistration();
+    let sub = await reg.pushManager.getSubscription();
+    if(sub) {
+        return `${location.origin}/send?id=${sub.endpoint}`;
+    }
+    else {
+        return ``;
+    }
   }
 }
 

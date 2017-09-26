@@ -40,6 +40,11 @@ pubsub.createTopic(sendTopic)
           model.Subscription.getByEndpoint(id)
           .then(sub => {
             console.log(`Got Subscription ${sub.endpoint}`);
+            if(sub === undefined) {
+              console.error(`Sub undefined`, id);
+              message.ack()
+              return
+            }
             const applicationServerKey = sub.applicationServerKey;
             const endpoint = sub.endpoint;
             const p256dh = sub.p256dh;
