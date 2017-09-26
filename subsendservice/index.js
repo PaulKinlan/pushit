@@ -36,6 +36,11 @@ pubsub.createTopic(sendTopic)
 
           console.log(`Recieved Message.Id ${id}`);
 
+          if(id === undefined) {
+            message.ack();
+            return;
+          }
+
           model.Subscription.getByEndpoint(id)
           .then(sub => {
             
